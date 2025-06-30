@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "डैशबोर्ड",
+    "dataSources": "डेटा स्रोत",
+    "privacy": "गोपनीयता सेटिंग्स", 
+    "help": "मदद और सहायता",
+    "profile": "प्रोफाइल",
+    "reports": "क्रेडिट रिपोर्ट",
+    "logout": "लॉगआउट"
+  },
+  "voiceAssistant": {
+    "title": "वॉयस असिस्टेंट",
+    "startListening": "सुनना शुरू करें",
+    "listening": "सुन रहा है...",
+    "transcript": "आपने कहा",
+    "speaking": "बोल रहा है...",
+    "showCommands": "कमांड",
+    "availableCommands": "उपलब्ध वॉयस कमांड",
+    "commandNotRecognized": "कमांड समझ नहीं आया",
+    "navigatingTo": "{{page}} पर जा रहे हैं",
+    "online": "ऑनलाइन",
+    "offline": "ऑफलाइन",
+    "offlineMode": "ऑफलाइन मोड में वॉयस फीचर सीमित हैं",
+    "speechError": "स्पीच रिकग्निशन एरर",
+    "notSupported": "स्पीच रिकग्निशन समर्थित नहीं",
+    "notAvailable": "स्पीच रिकग्निशन उपलब्ध नहीं"
+  }
+}

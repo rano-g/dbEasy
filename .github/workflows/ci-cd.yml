@@ -1,28 +1,94 @@
-{
-  "navigation": {
-    "dashboard": "डैशबोर्ड",
-    "dataSources": "डेटा स्रोत",
-    "privacy": "गोपनीयता सेटिंग्स", 
-    "help": "मदद और सहायता",
-    "profile": "प्रोफाइल",
-    "reports": "क्रेडिट रिपोर्ट",
-    "logout": "लॉगआउट"
-  },
-  "voiceAssistant": {
-    "title": "वॉयस असिस्टेंट",
-    "startListening": "सुनना शुरू करें",
-    "listening": "सुन रहा है...",
-    "transcript": "आपने कहा",
-    "speaking": "बोल रहा है...",
-    "showCommands": "कमांड",
-    "availableCommands": "उपलब्ध वॉयस कमांड",
-    "commandNotRecognized": "कमांड समझ नहीं आया",
-    "navigatingTo": "{{page}} पर जा रहे हैं",
-    "online": "ऑनलाइन",
-    "offline": "ऑफलाइन",
-    "offlineMode": "ऑफलाइन मोड में वॉयस फीचर सीमित हैं",
-    "speechError": "स्पीच रिकग्निशन एरर",
-    "notSupported": "स्पीच रिकग्निशन समर्थित नहीं",
-    "notAvailable": "स्पीच रिकग्निशन उपलब्ध नहीं"
-  }
-}
+name: dbEasy CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, staging ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    name: 🔍 Lint & Type Check
+    
+    steps:
+    - name: 📚 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📥 Install dependencies
+      run: npm ci
+      
+    - name: 🔍 Run ESLint
+      run: npm run lint
+      
+    - name: 🔧 Type check
+      run: npm run type-check
+
+  test:
+    runs-on: ubuntu-latest
+    name: 🧪 Test Suite
+    needs: lint-and-typecheck
+    
+    steps:
+    - name: 📚 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📥 Install dependencies
+      run: npm ci
+      
+    - name: 🧪 Run tests
+      run: npm run test:coverage
+
+  build:
+    runs-on: ubuntu-latest
+    name: 🏗️ Build Application
+    needs: [lint-and-typecheck, test]
+    
+    steps:
+    - name: 📚 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📥 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: npm run build
+
+  deploy-production:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    name: 🌟 Deploy to Production
+    needs: [build]
+    
+    steps:
+    - name: 📚 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 🌟 Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'

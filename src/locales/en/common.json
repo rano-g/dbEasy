@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "dataSources": "Data Sources", 
+    "privacy": "Privacy Settings",
+    "help": "Help & Support",
+    "profile": "Profile",
+    "reports": "Credit Reports",
+    "logout": "Logout"
+  },
+  "voiceAssistant": {
+    "title": "Voice Assistant",
+    "startListening": "Start Listening",
+    "listening": "Listening...",
+    "transcript": "You said",
+    "speaking": "Speaking...",
+    "showCommands": "Commands",
+    "availableCommands": "Available Voice Commands",
+    "commandNotRecognized": "Command not recognized",
+    "navigatingTo": "Navigating to {{page}}",
+    "online": "Online",
+    "offline": "Offline",
+    "offlineMode": "Voice features limited in offline mode",
+    "speechError": "Speech recognition error",
+    "notSupported": "Speech recognition not supported",
+    "notAvailable": "Speech recognition not available"
+  }
+}
